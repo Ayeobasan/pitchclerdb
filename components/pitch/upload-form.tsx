@@ -113,7 +113,7 @@ export default function UploadForm({ data, updateData }: UploadFormProps) {
       )}
 
       <div>
-        <h2 className="text-xl font-medium mb-2">Upload Music File *</h2>
+        <h2 className="text-xl font-medium mb-2">Attach press picture *</h2>
         <p className="text-gray-500 mb-4">Upload your music file (MP3, WAV, FLAC, AAC)</p>
 
         {data.musicFile ? (
@@ -138,7 +138,7 @@ export default function UploadForm({ data, updateData }: UploadFormProps) {
             <p className="ant-upload-drag-icon">
               <UploadIcon className="h-10 w-10 mx-auto text-gray-400" />
             </p>
-            <p className="ant-upload-text">Click or drag music file to this area to upload</p>
+            <p className="ant-upload-text">Click or drag attach press picture to this area to upload</p>
             <p className="ant-upload-hint text-gray-500">Support for MP3, WAV, FLAC, AAC (max 50MB)</p>
           </Dragger>
         )}

@@ -122,7 +122,7 @@ export default function LinksForm({ data, updateData }: LinksFormProps) {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">
-          <Label htmlFor="musicLink">Music Link (Spotify, SoundCloud, etc.)</Label>
+          <Label htmlFor="musicLink">Enter Listen Link (Spotify, SoundCloud, etc.)</Label>
           <Input
             id="musicLink"
             value={data.musicLink}
