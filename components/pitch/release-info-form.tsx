@@ -55,7 +55,7 @@ export default function ReleaseInfoForm({ data, updateData }: ReleaseInfoFormPro
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="recordName">Record Name</Label>
+          <Label htmlFor="recordName">Release Title</Label>
           <Input
             id="recordName"
             value={data.recordName}

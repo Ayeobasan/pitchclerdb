@@ -119,20 +119,19 @@ export default function PitchForm({ step, pitchType, onNext, onBack, formData, u
       const response = await PitchService.createPitch(submitData)
       console.log(response)
       message.success("Pitch submitted successfully!")
-      router.push("/dashboard/submit-success")
+      router.push(response.paymentLink)
     } catch (error: any) {
       console.error("Error submitting pitch:", error)
       console.log(error)
 
-      // Extract error message from the response if available
-      // const errorMessage =
-      //   error?.response?.data?.message ||
-      //   (error?.message === "File upload failed"
-      //     ? "File upload failed. Please check your files and try again."
-      //     : "Failed to submit pitch. Please try again.")
+      const errorMessage =
+        error?.response?.data?.message ||
+        (error?.message === "File upload failed"
+          ? "File upload failed. Please check your files and try again."
+          : "Failed to submit pitch. Please try again.")
 
-      setSubmitError(error)
-      message.error(error)
+      setSubmitError(errorMessage)
+      message.error(errorMessage)
     } finally {
       setSubmitting(false)
     }
