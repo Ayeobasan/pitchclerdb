@@ -8,7 +8,7 @@ interface LogoProps {
 export default function Logo({ className = "" }: LogoProps) {
   return (
     <Link href="/dashboard" className={`flex items-center ${className}`}>
-      <Image src="/logo.svg" alt="Logo" width={150} height={150} />
+      <Image src="/logo.png" alt="Logo" width={150} height={150} />
     </Link>
   )
 }

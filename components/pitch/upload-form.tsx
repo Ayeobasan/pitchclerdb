@@ -113,7 +113,7 @@ export default function UploadForm({ data, updateData }: UploadFormProps) {
       )}
 
       <div>
-        <h2 className="text-xl font-medium mb-2">Attach press picture *</h2>
+        <h2 className="text-xl font-medium mb-2">Attach MP3 *</h2>
         <p className="text-gray-500 mb-4">Upload your music file (MP3, WAV, FLAC, AAC)</p>
 
         {data.musicFile ? (

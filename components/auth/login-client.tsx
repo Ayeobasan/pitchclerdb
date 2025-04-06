@@ -79,7 +79,7 @@ export default function LoginClient() {
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
       <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow">
         <div className="text-center">
-          <Logo className="mx-auto h-12" />
+          <Logo className="mx-auto flex justify-center text-center h-12" />
           <h1 className="mt-6 text-3xl font-bold">Login To Your Account</h1>
           <p className="mt-2 text-sm text-gray-600">Enter your credentials to access your account</p>
         </div>
@@ -95,7 +95,7 @@ export default function LoginClient() {
           />
         )}
 
-        <Button
+        {/* <Button
           block
           size="large"
           icon={<Google className="h-5 w-5 mr-2" />}
@@ -106,7 +106,7 @@ export default function LoginClient() {
           Sign in with Google
         </Button>
 
-        <Divider plain>Or continue with email</Divider>
+        <Divider plain>Or continue with email</Divider> */}
 
         <form className="space-y-6" onSubmit={handleSubmit}>
           <div className="space-y-2">
