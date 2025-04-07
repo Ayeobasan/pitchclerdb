@@ -61,7 +61,7 @@ export default function ReleaseInfoForm({ data, updateData }: ReleaseInfoFormPro
             value={data.recordName}
             onChange={(e) => updateData({ recordName: e.target.value })}
             size="large"
-            placeholder="Your record label name"
+            placeholder="Your release title "
           />
         </div>
       </div>

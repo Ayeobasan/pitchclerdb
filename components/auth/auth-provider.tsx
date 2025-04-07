@@ -5,6 +5,7 @@ import { createContext, useContext, useState, useEffect } from "react"
 import { AuthService } from "@/app/services/auth.services"
 import { ProfileService } from "@/app/services/profile.services"
 import { setAuthorizationToken } from "@/app/services/api"
+import { useRouter } from "next/navigation"
 
 // Update the User type to include firstName and lastName
 type User = {
@@ -34,14 +35,14 @@ type AuthContextType = {
 const defaultContextValue: AuthContextType = {
   user: null,
   login: async () => null,
-  loginWithGoogle: async () => {},
-  register: async () => {},
-  logout: async () => {},
+  loginWithGoogle: async () => { },
+  register: async () => { },
+  logout: async () => { },
   isLoading: true,
   resetPassword: async () => ({}),
   verifyOTP: async () => ({}),
   resetPasswordWithCode: async () => ({}),
-  confirmPasswordReset: async () => {},
+  confirmPasswordReset: async () => { },
 }
 
 const AuthContext = createContext<AuthContextType>(defaultContextValue)
@@ -49,7 +50,7 @@ const AuthContext = createContext<AuthContextType>(defaultContextValue)
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
   const [isLoading, setIsLoading] = useState(true)
-
+  const router = useRouter()
   useEffect(() => {
     // This will only run on the client side
     const initAuth = async () => {
@@ -199,21 +200,50 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     })
   }
 
-  const register = async (name: string, email: string, password: string) => {
+  const register = async (
+    firstName: string,
+    lastName: string,
+    email: string,
+    // phone_number?: string,
+    // country_code?: string,
+  ) => {
     try {
-      const response = await AuthService.signUp({ name, email, password })
-      if (response && response.data && response.data.user) {
-        setUser(response.data.user)
-        localStorage.setItem("user", JSON.stringify(response.data.user))
-        // After registration, fetch the full profile
-        await checkValidityOfToken()
+      const response = await AuthService.signUp({
+        firstName,
+        lastName,
+        email,
+        // phone_number,
+        // country_code,
+      })
+
+      if (response && response.data) {
+        // Format user data from the response
+        const userData = {
+          id: response.data.id || "unknown",
+          email: email,
+          name: `${firstName} ${lastName}`,
+          firstName: firstName,
+          lastName: lastName,
+          phone_number: phone_number,
+          country_code: country_code,
+        }
+
+        setUser(userData)
+        localStorage.setItem("user", JSON.stringify(userData))
+
+        // After registration, try to fetch the full profile
+        try {
+          await checkValidityOfToken()
+        } catch (profileError) {
+          console.error("Failed to load profile after registration:", profileError)
+          // Continue with basic user data even if profile fetch fails
+        }
       }
     } catch (error) {
       console.error("Registration error:", error)
       throw error
     }
   }
-
   const resetPassword = async (email: string) => {
     try {
       const response = await AuthService.forgetPassword({ email })
@@ -258,6 +288,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setUser(null)
     localStorage.removeItem("user")
     localStorage.removeItem("AUTH_TOKEN_KEY")
+    router.replace("/login")
   }
 
   const value = {

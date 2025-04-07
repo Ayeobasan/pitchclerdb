@@ -13,8 +13,8 @@ export default function PackageForm({ data, updateData }: PackageFormProps) {
   const packages = [
     {
       id: "Curator",
-      name: "Curator Playlist Placement",
-      price: "$35",
+      name: "Advance Pitch",
+      price: "$55",
       period: "/ Pitch",
       features: [
         "Advanced Curator pitch &  Playlist placement Accross Dsp",
@@ -39,6 +39,7 @@ export default function PackageForm({ data, updateData }: PackageFormProps) {
         "Priority email support",
         "Editorial Press Feature",
       ],
+      recommended: true,
     },
     {
       id: "Pro",
@@ -55,7 +56,6 @@ export default function PackageForm({ data, updateData }: PackageFormProps) {
         "Customizable pitch templates",
         "Full Pitch Asset Optimization",
       ],
-      recommended: true,
     },
   ]
 
@@ -70,15 +70,16 @@ export default function PackageForm({ data, updateData }: PackageFormProps) {
           <Badge.Ribbon
             text="Recommended"
             color="#9333ea"
-            style={{ display: pkg.recommended ? "block" : "none" }}
+            style={{ display: pkg.recommended ? "" : "none",fontSize:"10px", }}
             key={pkg.id}
+            placement="start"
           >
             <Card
               hoverable
-              className={`h-full ${data.selectedPackage === pkg.id ? "border-purple-600 border-2" : ""}`}
+              className={`h-full ${data.selectedPackage === pkg.id ? "border-purple-600 border-2 " : ""}`}
               title={
                 <div className="text-center py-2">
-                  <h3 className="text-lg font-medium">{pkg.name}</h3>
+                  <h3 className="text-lg font-medium text-purple-600">{pkg.name}</h3>
                   <div className="flex items-center justify-center mt-2">
                     <span className="text-4xl font-bold">{pkg.price}</span>
                     <span className="text-gray-500 ml-1">{pkg.period}</span>

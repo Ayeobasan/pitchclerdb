@@ -14,7 +14,9 @@ export default function Sidebar() {
   const isActive = (path: string) => {
     return pathname === path || pathname.startsWith(`${path}/`)
   }
-
+  const allert = (message: string) => {
+    window.alert(message)
+  }
   return (
     <>
       {/* Mobile sidebar toggle */}
@@ -53,13 +55,13 @@ export default function Sidebar() {
       <div
         className={`w-60 border-r border-gray-200 flex flex-col h-full bg-white fixed lg:static z-40 transition-all duration-300 transform ${sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}`}
       >
-       
+
 
         <nav className="flex-1 overflow-y-auto pt-16 lg:pt-0">
           <ul className="px-2 space-y-1">
-             <div className="">
-          <Logo />
-        </div>
+            <div className="">
+              <Logo />
+            </div>
             <li>
               <Link
                 href="/dashboard"
@@ -70,15 +72,11 @@ export default function Sidebar() {
                 <span>Home</span>
               </Link>
             </li>
-            <li>
-              <Link
-                href="/dashboard/my-pitch"
-                className={`sidebar-link ${isActive("/dashboard/my-pitch") ? "active" : ""}`}
-                onClick={() => setSidebarOpen(false)}
-              >
-                <Music className="h-5 w-5" />
-                <span>My Pitch</span>
-              </Link>
+
+            <li onClick={() => allert("Coming Soon")}className={`sidebar-link `}>
+
+              <Music className="h-5 w-5" />
+              <span >My Pitch</span>
             </li>
             <li>
               <Link
