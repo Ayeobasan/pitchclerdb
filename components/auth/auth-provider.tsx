@@ -224,8 +224,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           name: `${firstName} ${lastName}`,
           firstName: firstName,
           lastName: lastName,
-          phone_number: phone_number,
-          country_code: country_code,
+          // phone_number: phone_number,
+          // country_code: country_code,
         }
 
         setUser(userData)
