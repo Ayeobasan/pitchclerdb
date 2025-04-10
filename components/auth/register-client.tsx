@@ -23,7 +23,10 @@ export default function RegisterClient() {
   const [error, setError] = useState<string | null>(null)
   const router = useRouter()
   const { register, loginWithGoogle, isLoading } = useAuth()
-
+  const [socialMediaLink, setSocialMediaLink] = useState("")
+  const [userType, setUserType] = useState("")
+  const [artistStatus, setArtistStatus] = useState("")
+  const [pitchingFor, setPitchingFor] = useState([])
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
@@ -37,30 +40,14 @@ export default function RegisterClient() {
 
       // Call the updated register function with the separate first and last name
       await register(firstName, lastName, email)
-      message.success("Registration successful!")
-      router.push("/dashboard")
+      message.success("Registration request submitted successfully!")
+      router.push("/registration-success")
     } catch (error: any) {
       console.error("Registration failed:", error)
       const errorMessage = error?.response?.data?.message || error.message || "Registration failed. Please try again."
       setError(errorMessage)
     } finally {
       setLoading(false)
-    }
-  }
-
-  const handleGoogleLogin = async () => {
-    setGoogleLoading(true)
-    setError(null)
-
-    try {
-      await loginWithGoogle()
-      router.push("/dashboard")
-    } catch (error: any) {
-      console.error("Google login failed:", error)
-      const errorMessage = error?.response?.data?.message || "Google login failed. Please try again."
-      setError(errorMessage)
-    } finally {
-      setGoogleLoading(false)
     }
   }
 
@@ -156,48 +143,84 @@ export default function RegisterClient() {
             />
           </div>
 
-          {/* <div className="space-y-2">
-            <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
-              Phone Number
+          <div className="space-y-2">
+            <label htmlFor="userType" className="block text-sm font-medium text-gray-700">
+              What best describes you? *
             </label>
-            <div className="flex space-x-2">
-              <Select value={countryCode} onChange={setCountryCode} style={{ width: 100 }} size="large">
-                <Option value="NG">+234 (NG)</Option>
-                <Option value="GH">+233 (GH)</Option>
-                <Option value="KE">+254 (KE)</Option>
-                <Option value="US">+1 (US)</Option>
-                <Option value="UK">+44 (UK)</Option>
-              </Select>
-              <Input
-                id="phone"
-                name="phone"
-                required
-                value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value)}
-                size="large"
-                placeholder="Enter your phone number"
-                className="flex-1"
-              />
-            </div>
-          </div> */}
-
-          {/* <div className="space-y-2">
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-              Password
-            </label>
-            <Input.Password
-              id="password"
-              name="password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+            <Select
+              id="userType"
+              value={userType}
+              onChange={setUserType}
+              style={{ width: "100%" }}
               size="large"
-              placeholder="Create a password"
+              placeholder="Select your role"
+              required
+            >
+              <Option value="Artist">Artist</Option>
+              <Option value="Manager">Manager</Option>
+              <Option value="Distributor">Distributor</Option>
+              <Option value="Label Representative">Label Representative</Option>
+              <Option value="Industry Professional/PR">Industry Professional/PR</Option>
+            </Select>
+          </div>
+
+          <div className="space-y-2">
+            <label htmlFor="artistStatus" className="block text-sm font-medium text-gray-700">
+              Are you signed or Independent? *
+            </label>
+            <Select
+              id="artistStatus"
+              value={artistStatus}
+              onChange={setArtistStatus}
+              style={{ width: "100%" }}
+              size="large"
+              placeholder="Select your status"
+              required
+            >
+              <Option value="Signed">Signed</Option>
+              <Option value="Independent">Independent</Option>
+            </Select>
+          </div>
+
+          <div className="space-y-2">
+            <label htmlFor="pitchingFor" className="block text-sm font-medium text-gray-700">
+              Pitching for *
+            </label>
+            <Select
+              id="pitchingFor"
+              mode="multiple"
+              value={pitchingFor}
+              onChange={setPitchingFor}
+              style={{ width: "100%" }}
+              size="large"
+              placeholder="Select pitching options"
+              required
+            >
+              <Option value="Radio">Radio</Option>
+              <Option value="DSP Playlist Placement">DSP Playlist Placement</Option>
+              <Option value="Royalty Advance/Label Pitch">Royalty Advance/Label Pitch</Option>
+              <Option value="Distribution">Distribution</Option>
+              <Option value="Marketing">Marketing</Option>
+            </Select>
+          </div>
+
+          <div className="space-y-2">
+            <label htmlFor="socialMediaLink" className="block text-sm font-medium text-gray-700">
+              Artist Social Media Link (Instagram)
+            </label>
+            <Input
+              id="socialMediaLink"
+              name="socialMediaLink"
+              type="url"
+              value={socialMediaLink}
+              onChange={(e) => setSocialMediaLink(e.target.value)}
+              size="large"
+              placeholder="https://instagram.com/yourusername"
             />
-          </div> */}
+          </div>
 
           <Button type="primary" htmlType="submit" loading={loading} block size="large">
-            {loading ? "Creating account..." : "Create Account"}
+            {loading ? "Submitting request..." : "Request Access"}
           </Button>
         </form>
 

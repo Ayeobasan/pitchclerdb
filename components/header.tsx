@@ -20,7 +20,15 @@ export default function Header() {
   const { user, logout } = useAuth()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
+  const isAdmin = user?.role === "admin"
+  const isAdminPath = pathname.startsWith("/admin")
+  
   const getPageTitle = () => {
+    if (isAdminPath) {
+      if (pathname === "/admin") return "Admin Dashboard"
+      if (pathname === "/admin/users") return "User Management"
+      return "Admin"
+    }
     if (pathname === "/dashboard") return "Dashboard"
     if (pathname === "/dashboard/my-pitch") return "My Pitch"
     if (pathname === "/dashboard/submit-pitch") return "Submit New Pitch"

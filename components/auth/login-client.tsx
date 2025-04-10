@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useAuth } from "@/components/auth/auth-provider"
@@ -22,8 +22,19 @@ export default function LoginClient() {
   const auth = useAuth()
   console.log("Auth context in login:", auth)
 
-  const { login, loginWithGoogle, isLoading } = useAuth()
-
+  const { login,user, loginWithGoogle, isLoading } = useAuth()
+  useEffect(() => {
+    if (user) {
+      console.log("User is logged in:", user)
+      if (user.role === "admin") {
+        console.log("User is admin, redirecting to admin dashboard",user.role )
+        router.push("/admin")
+      } else {
+        console.log("User is not admin, redirecting to dashboard")
+        router.push("/dashboard")
+      }
+    }
+  }, [user, router])
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
@@ -31,11 +42,17 @@ export default function LoginClient() {
 
     try {
       console.log("Attempting login with:", { email, password })
-      const userData = await login(email, password)
-
+      const userData = await login(email, password) as any
+      if (userData.role === "admin") {
+        console.log("User is admin, redirecting to admin dashboard",userData.role )
+        router.push("/admin")
+      } else {
+        console.log("User is not admin, redirecting to dashboard")
+        router.push("/dashboard")
+      }
       if (userData) {
         console.log("Login successful, user data loaded:", userData)
-        router.push("/dashboard")
+
       } else {
         const errorMsg = "Login failed. Please check your credentials and try again."
         console.error(errorMsg)
