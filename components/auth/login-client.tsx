@@ -30,8 +30,8 @@ export default function LoginClient() {
         console.log("User is admin, redirecting to admin dashboard",user.role )
         router.push("/admin")
       } else {
-        console.log("User is not admin, redirecting to dashboard")
-        router.push("/dashboard")
+        console.log("User is not admina, redirecting to dashboard")
+        // router.push("/dashboard")
       }
     }
   }, [user, router])
