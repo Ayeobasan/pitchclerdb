@@ -77,7 +77,7 @@ export default function Header() {
                 <span className="font-medium">
                   {user?.name || (user?.firstName && user?.lastName) ? `${user.firstName} ${user.lastName}` : "User"}
                 </span>
-                <span className="text-xs text-gray-500">Artist</span>
+                <span className="text-xs text-gray-500">{user?.role}</span>
               </div>
               <ChevronDown className="h-4 w-4 text-gray-500 hidden sm:block" />
             </Button>

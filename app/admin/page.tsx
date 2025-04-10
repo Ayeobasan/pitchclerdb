@@ -50,7 +50,7 @@ export default function AdminDashboardPage() {
   }
 
   return (
-    <div className="container mx-auto">
+    <div className="mx-auto">
       <h1 className="text-2xl font-bold mb-6">Admin Dashboard</h1>
 
       <Row gutter={[16, 16]}>
