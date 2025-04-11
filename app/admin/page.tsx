@@ -2,7 +2,13 @@
 
 import { useState, useEffect } from "react"
 import { Card, Row, Col, Statistic, Spin } from "antd"
-import { UserOutlined, TeamOutlined, CheckCircleOutlined, ClockCircleOutlined } from "@ant-design/icons"
+import {
+  UserOutlined,
+  TeamOutlined,
+  CheckCircleOutlined,
+  ClockCircleOutlined,
+  FileTextOutlined,
+} from "@ant-design/icons"
 import { AdminService } from "@/app/services/admin.services"
 import Link from "next/link"
 
@@ -11,6 +17,8 @@ export default function AdminDashboardPage() {
     totalUsers: 0,
     adminUsers: 0,
     pendingApprovals: 0,
+    totalPitches: 0,
+    pendingPitches: 0,
   })
   const [loading, setLoading] = useState(true)
 
@@ -21,19 +29,33 @@ export default function AdminDashboardPage() {
   const fetchStats = async () => {
     try {
       setLoading(true)
-      const response = await AdminService.getAllUsers()
 
-      if (response.status === "success" && Array.isArray(response.data)) {
-        const users = response.data as any[]
-        const adminUsers = users.filter((user) => user.role === "admin").length
-        const pendingApprovals = users.filter((user) => !user.isApproved && user.role !== "admin").length
-
-        setStats({
-          totalUsers: response.totalUsers || users.length,
-          adminUsers,
-          pendingApprovals,
-        })
+      // Fetch users
+      const usersResponse = await AdminService.getAllUsers()
+      let users = []
+      if (usersResponse.status === "success" && Array.isArray(usersResponse.data)) {
+        users = usersResponse.data
       }
+
+      // Fetch pitches
+      const pitchesResponse = await AdminService.getAllPitches()
+      let pitches = []
+      if (pitchesResponse.status === "success" && Array.isArray(pitchesResponse.data)) {
+        pitches = pitchesResponse.data
+      }
+
+      // Calculate stats
+      const adminUsers = users.filter((user) => user.role === "admin").length
+      const pendingApprovals = users.filter((user) => !user.isApproved && user.role !== "admin").length
+      const pendingPitches = pitches.filter((pitch) => pitch.status === "pending" || !pitch.status).length
+
+      setStats({
+        totalUsers: users.length,
+        adminUsers,
+        pendingApprovals,
+        totalPitches: pitches.length,
+        pendingPitches,
+      })
     } catch (error) {
       console.error("Failed to fetch stats:", error)
     } finally {
@@ -50,7 +72,7 @@ export default function AdminDashboardPage() {
   }
 
   return (
-    <div className="mx-auto">
+    <div className="container mx-auto">
       <h1 className="text-2xl font-bold mb-6">Admin Dashboard</h1>
 
       <Row gutter={[16, 16]}>
@@ -92,6 +114,32 @@ export default function AdminDashboardPage() {
             </Card>
           </Link>
         </Col>
+
+        <Col xs={24} sm={12} lg={8}>
+          <Link href="/admin/pitches">
+            <Card hoverable>
+              <Statistic
+                title="Total Pitches"
+                value={stats.totalPitches}
+                prefix={<FileTextOutlined />}
+                valueStyle={{ color: "#9333EA" }}
+              />
+            </Card>
+          </Link>
+        </Col>
+
+        <Col xs={24} sm={12} lg={8}>
+          <Link href="/admin/pitches">
+            <Card hoverable>
+              <Statistic
+                title="Pending Pitches"
+                value={stats.pendingPitches}
+                prefix={<ClockCircleOutlined />}
+                valueStyle={{ color: stats.pendingPitches > 0 ? "#ff4d4f" : "#52c41a" }}
+              />
+            </Card>
+          </Link>
+        </Col>
       </Row>
 
       <div className="mt-8">
@@ -102,6 +150,15 @@ export default function AdminDashboardPage() {
               <Card hoverable className="text-center">
                 <UserOutlined style={{ fontSize: 24, color: "#9333EA", marginBottom: 8 }} />
                 <p>Manage Users</p>
+              </Card>
+            </Link>
+          </Col>
+
+          <Col xs={24} sm={12} md={8} lg={6}>
+            <Link href="/admin/pitches">
+              <Card hoverable className="text-center">
+                <FileTextOutlined style={{ fontSize: 24, color: "#9333EA", marginBottom: 8 }} />
+                <p>Manage Pitches</p>
               </Card>
             </Link>
           </Col>
