@@ -46,7 +46,7 @@ export default function AdminDashboardPage() {
 
       // Calculate stats
       const adminUsers = users.filter((user) => user.role === "admin").length
-      const pendingApprovals = users.filter((user) => !user.isApproved && user.role !== "admin").length
+      const pendingApprovals = users.filter((user) =>  user.status === "pending").length
       const pendingPitches = pitches.filter((pitch) => pitch.status === "pending" || !pitch.status).length
 
       setStats({
@@ -70,7 +70,7 @@ export default function AdminDashboardPage() {
       </div>
     )
   }
-
+console.log({stats})
   return (
     <div className="container mx-auto">
       <h1 className="text-2xl font-bold mb-6">Admin Dashboard</h1>
