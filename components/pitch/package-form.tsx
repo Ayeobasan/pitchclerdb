@@ -19,7 +19,8 @@ export default function PackageForm({ data, updateData }: PackageFormProps) {
       features: [
         "Advanced Curator pitch &  Playlist placement Accross Dsp",
         "No pitch evaluation",
-        "Limited Pitch exposure",
+        "Limited Pitch exposure (Audiomack, Boomplay,Mdundo….)",
+        "Press Feature",
         "Limited feedback or suggestion",
         "Email Support",
       ],
@@ -32,11 +33,12 @@ export default function PackageForm({ data, updateData }: PackageFormProps) {
       features: [
         "Limited Editorial Playlist Pitch & placements accross DSPs",
         "Advanced Pitch Evaluation",
-        "Limited Pitch Exposure",
+        "Advance Pitch Exposure (Tidal,Apple music, Deezer, YouTube Music, Spotify……)",
         "Access to basic educational resources on pitching, marketing and distribution",
-        "Customizable pitch templates",
+        "Curator Playlist Placement",
         "Pro feedback and suggestion",
         "Priority email support",
+        "Customizable pitch templates",
         "Editorial Press Feature",
       ],
       recommended: true,
@@ -70,7 +72,7 @@ export default function PackageForm({ data, updateData }: PackageFormProps) {
           <Badge.Ribbon
             text="Recommended"
             color="#9333ea"
-            style={{ display: pkg.recommended ? "" : "none",fontSize:"10px", }}
+            style={{ display: pkg.recommended ? "" : "none", fontSize: "10px", }}
             key={pkg.id}
             placement="start"
           >
