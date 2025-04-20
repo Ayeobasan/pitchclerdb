@@ -14,8 +14,10 @@ export default function PackageForm({ data, updateData }: PackageFormProps) {
     {
       id: "Curator",
       name: "Advance Pitch",
-      price: "$55",
+      originalPrice: "$55",
+      price: "$35",
       period: "/ Pitch",
+      discounted: true,
       features: [
         "Advanced Curator pitch &  Playlist placement Accross Dsp",
         "No pitch evaluation",
@@ -83,8 +85,21 @@ export default function PackageForm({ data, updateData }: PackageFormProps) {
                 <div className="text-center py-2">
                   <h3 className="text-lg font-medium text-purple-600">{pkg.name}</h3>
                   <div className="flex items-center justify-center mt-2">
-                    <span className="text-4xl font-bold">{pkg.price}</span>
-                    <span className="text-gray-500 ml-1">{pkg.period}</span>
+                    {pkg.discounted ? (
+                      <div className="flex flex-col items-center">
+                        <span className="text-sm text-gray-500 line-through">{pkg.originalPrice}</span>
+                        <div className="flex items-center">
+                          <span className="text-4xl font-bold text-green-600">{pkg.price}</span>
+                          <span className="text-gray-500 ml-1">{pkg.period}</span>
+                        </div>
+                        <span className="text-xs text-green-600 font-medium mt-1">Limited Time Offer!</span>
+                      </div>
+                    ) : (
+                      <div className="flex items-center">
+                        <span className="text-4xl font-bold">{pkg.price}</span>
+                        <span className="text-gray-500 ml-1">{pkg.period}</span>
+                      </div>
+                    )}
                   </div>
                 </div>
               }
