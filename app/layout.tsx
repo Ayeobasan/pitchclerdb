@@ -8,7 +8,7 @@ import { AntdRegistry } from "@ant-design/nextjs-registry"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Pitch-Ally - Music Distribution Platform",
+  title: "Pitchally - Pitch your Music, Get on playlist",
   description: "Submit and distribute your music to platforms worldwide",
     generator: 'v0.dev'
 }
